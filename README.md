@@ -6,6 +6,7 @@ Auto decode/encode attribute value in json, provide array access and json valida
 
 [![Packagist Version](https://img.shields.io/packagist/v/paulzi/yii2-json-behavior.svg)](https://packagist.org/packages/paulzi/yii2-json-behavior)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/paulzi/yii2-json-behavior/master.svg)](https://scrutinizer-ci.com/g/paulzi/yii2-json-behavior/?branch=master)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/paulzi/yii2-json-behavior.svg)](https://scrutinizer-ci.com/g/paulzi/yii2-json-behavior/?branch=master)
 [![Build Status](https://img.shields.io/travis/paulzi/yii2-json-behavior/master.svg)](https://travis-ci.org/paulzi/yii2-json-behavior)
 [![Total Downloads](https://img.shields.io/packagist/dt/paulzi/yii2-json-behavior.svg)](https://packagist.org/packages/paulzi/yii2-json-behavior)
 
