@@ -1,7 +1,7 @@
 {
   "name": "paulzi/yii2-json-behavior",
   "description": "Yii2 json attribute behavior",
-  "keywords": ["yii2", "json", "behavior"],
+  "keywords": ["yii2", "json", "behavior", "validator"],
   "type": "yii2-extension",
   "license": "MIT",
   "support": {
