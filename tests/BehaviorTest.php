@@ -224,6 +224,12 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame((string)$model, '[2,true,"best",{"test":"test"}]');
     }
 
+    public function testFields()
+    {
+        $model = new JsonField('{ "test": { "best": true}, "best": 2 }');
+        $this->assertSame($model->fields(), ['test' => 'test', 'best' => 'best']);
+    }
+
     public function testToArray()
     {
         $model = new JsonField('{ "test": false }');
@@ -237,6 +243,9 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
 
         $model = new JsonField('[1, false, "test", null]');
         $this->assertSame($model->toArray(), [1, false, "test", null]);
+
+        $model = new JsonField('{ "test": { "best": true}, "best": 2 }');
+        $this->assertSame($model->toArray(['test']), ['test' => ['best' => true]]);
     }
 
     public function testIsEmpty()
@@ -266,6 +275,13 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
         $item->params['one'] = 'value';
         $item->params['two'] = [];
         $item->params['two']['test'] = true;
+        $this->assertSame($item->toArray(), [
+            'params' => [
+                'one' => 'value',
+                'two' => ['test' => true],
+            ],
+        ]);
+        $this->assertSame($item->params->toArray(['one']), ['one' => 'value']);
         $this->assertSame($item->save(false), true);
         $item->params['one'] = 42;
         $this->assertSame($item->params['one'], 42);
