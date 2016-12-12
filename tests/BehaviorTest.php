@@ -224,6 +224,12 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame((string)$model, '[2,true,"best",{"test":"test"}]');
     }
 
+    public function testFields()
+    {
+        $model = new JsonField('{ "test": { "best": true}, "best": 2 }');
+        $this->assertSame($model->fields(), ['test' => 'test', 'best' => 'best']);
+    }
+
     public function testToArray()
     {
         $model = new JsonField('{ "test": false }');
@@ -237,6 +243,9 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
 
         $model = new JsonField('[1, false, "test", null]');
         $this->assertSame($model->toArray(), [1, false, "test", null]);
+
+        $model = new JsonField('{ "test": { "best": true}, "best": 2 }');
+        $this->assertSame($model->toArray(['test']), ['test' => ['best' => true]]);
     }
 
     public function testIsEmpty()

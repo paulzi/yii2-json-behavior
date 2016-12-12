@@ -1,10 +1,11 @@
 <?php
 namespace paulzi\jsonBehavior;
 
+use yii\base\Arrayable;
 use yii\base\InvalidParamException;
 use yii\helpers\Json;
 
-class JsonField implements \ArrayAccess
+class JsonField implements \ArrayAccess, Arrayable
 {
     /**
      * @var array
@@ -49,11 +50,28 @@ class JsonField implements \ArrayAccess
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    public function toArray()
+    public function fields()
     {
-        return $this->value;
+        $fields = array_keys($this->value);
+        return array_combine($fields, $fields);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function toArray(array $fields = [], array $expand = [], $recursive = true)
+    {
+        return empty($fields) ? $this->value : array_intersect_key($this->value, array_flip($fields));
     }
 
     /**
