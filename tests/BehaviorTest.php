@@ -291,6 +291,35 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($item->params['two']['test'], true);
     }
 
+    public function testRefresh()
+    {
+        $item = new Item();
+        $item->params['one'] = 3;
+        $item->params['two'] = 2;
+        $this->assertSame($item->save(false), true);
+        $item->params['one']   = 'one';
+        $item->params['three'] = 3;
+        $item->refresh();
+        $this->assertSame($item->params->toArray(), ['one' => 3, 'two' => 2]);
+    }
+
+    public function testDirtyAttributesOnUpdate()
+    {
+        $item = new Item();
+        $testChanged = null;
+        $item->on($item::EVENT_AFTER_UPDATE, function ($event) use (&$testChanged) {
+            $this->assertSame($event->changedAttributes, $testChanged);
+        });
+        $item->params['one'] = 3;
+        $item->params['two'] = 2;
+        $this->assertSame($item->save(false), true);
+        $testChanged = [];
+        $this->assertSame($item->update(false), 0);
+        $item->params['one'] = 1;
+        $testChanged = ['params' => '{"one":3,"two":2}'];
+        $this->assertSame($item->update(false), 1);
+    }
+
     public function testValidatorTest()
     {
         $item = new Item();
