@@ -127,7 +127,20 @@ var_dump($item->save()); // false
 var_dump($item->errors); // ['params' => ['Value is not valid JSON or scalar']]
 ```
 
-You can set `merge = true`, in this case, instead of replacing all field data of the transmitted data, `array_merge()` will be applied with old data in the field (which are taken from `oldAttributes` of ActiveRecord). This option can be apply only with ActiveRecord.
+You can set `merge = true`, in this case, instead of replacing all field data of the transmitted data, `array_merge()` will be applied with old data in the field (which are taken from `oldAttributes` of ActiveRecord). This option can be apply only with ActiveRecord:
+
+```php
+use paulzi\jsonBehavior\JsonValidator;
+
+class Item extends \yii\db\ActiveRecord
+{
+    public function rules() {
+        return [
+            [['params'], JsonValidator::className(), 'merge' => true],
+        ];
+    }
+}
+```
 
 ### JsonField
 
