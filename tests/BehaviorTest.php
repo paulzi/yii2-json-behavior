@@ -339,6 +339,16 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('params', $item->errors);
     }
 
+    public function testIssue()
+    {
+        $item = new Item();
+        $item->params['test1'] = 123;
+        $item->params['test2'] = 456;
+        $this->assertSame($item->save(false), true);
+        $item->params['test2'] = 789;
+        $this->assertSame($item->params->toArray(), ['test1' => 123, 'test2' => 789]);
+    }
+
     /**
      * @inheritdoc
      */
