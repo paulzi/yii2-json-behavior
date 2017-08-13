@@ -103,7 +103,7 @@ var_dump($item->params->isEmpty()); // true
 
 ### JsonValidator
 
-Настройте допольнительно модель (подключение поведения описано выше):
+Настройте дополнительно модель (подключение поведения описано выше):
 
 ```php
 use paulzi\jsonBehavior\JsonValidator;
@@ -126,6 +126,8 @@ $item->attributes = ['params' => '{ test: }'];
 var_dump($item->save()); // false
 var_dump($item->errors); // ['params' => ['Value is not valid JSON or scalar']]
 ```
+
+В качестве опции можно передать `merge = true`, в этом случае вместо замены всего значения поля переданными данными, будет осуществлен `array_merge()` со старыми данными в поле (которые берутся из `oldAttributes` ActiveRecord). Данный параметр применим только для ActiveRecord. 
 
 ### JsonField
 

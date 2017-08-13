@@ -127,6 +127,8 @@ var_dump($item->save()); // false
 var_dump($item->errors); // ['params' => ['Value is not valid JSON or scalar']]
 ```
 
+You can set `merge = true`, in this case, instead of replacing all field data of the transmitted data, `array_merge()` will be applied with old data in the field (which are taken from `oldAttributes` of ActiveRecord). This option can be apply only with ActiveRecord.
+
 ### JsonField
 
 You can use `JsonField` class for other models:
