@@ -9,6 +9,7 @@ namespace paulzi\jsonBehavior\tests;
 
 use tests\Item;
 use tests\ItemMerge;
+use tests\ItemRequired;
 use tests\TestMigration;
 use paulzi\jsonBehavior\JsonField;
 
@@ -354,6 +355,21 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
         $item->load(['params' => ['test2' => 789]], '');
         $this->assertSame($item->validate(), true);
         $this->assertSame($item->params->toArray(), ['test1' => 123, 'test2' => 789]);
+    }
+
+    public function testValidatorRequiredTest()
+    {
+        $item = new ItemRequired();
+        $item->params->set(null);
+        $this->assertSame($item->validate(), false);
+
+        $item = new ItemRequired();
+        $item->params->set('{}');
+        $this->assertSame($item->validate(), false);
+
+        $item = new ItemRequired();
+        $item->params['test'] = 1;
+        $this->assertSame($item->validate(), true);
     }
 
     /**

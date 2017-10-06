@@ -21,12 +21,14 @@ class JsonBehavior extends Behavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_INIT          => function () { $this->initialization(); },
-            ActiveRecord::EVENT_AFTER_FIND    => function () { $this->decode(); },
-            ActiveRecord::EVENT_BEFORE_INSERT => function () { $this->encode(); },
-            ActiveRecord::EVENT_BEFORE_UPDATE => function () { $this->encode(); },
-            ActiveRecord::EVENT_AFTER_INSERT  => function () { $this->decode(); },
-            ActiveRecord::EVENT_AFTER_UPDATE  => function () { $this->decode(); },
+            ActiveRecord::EVENT_INIT            => function () { $this->initialization(); },
+            ActiveRecord::EVENT_AFTER_FIND      => function () { $this->decode(); },
+            ActiveRecord::EVENT_BEFORE_VALIDATE => function () { $this->encodeValidate(); },
+            ActiveRecord::EVENT_BEFORE_INSERT   => function () { $this->encode(); },
+            ActiveRecord::EVENT_BEFORE_UPDATE   => function () { $this->encode(); },
+            ActiveRecord::EVENT_AFTER_VALIDATE  => function () { $this->decode(); },
+            ActiveRecord::EVENT_AFTER_INSERT    => function () { $this->decode(); },
+            ActiveRecord::EVENT_AFTER_UPDATE    => function () { $this->decode(); },
         ];
     }
 
@@ -62,6 +64,18 @@ class JsonBehavior extends Behavior
                 $field = new JsonField($field);
             }
             $this->owner->setAttribute($attribute, (string)$field ?: null);
+        }
+    }
+
+    /**
+     */
+    protected function encodeValidate()
+    {
+        foreach ($this->attributes as $attribute) {
+            $field = $this->owner->getAttribute($attribute);
+            if ($field instanceof JsonField) {
+                $this->owner->setAttribute($attribute, (string)$field ?: null);
+            }
         }
     }
 }
