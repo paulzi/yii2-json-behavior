@@ -322,6 +322,19 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($item->update(false), 1);
     }
 
+    public function testEmptyValue()
+    {
+        $item = new Item();
+        $this->assertSame($item->save(false), true);
+        $item->refresh();
+        $this->assertSame($item->getOldAttribute('params'), null);
+
+        $item = new ItemMerge();
+        $this->assertSame($item->save(false), true);
+        $item->refresh();
+        $this->assertSame($item->getOldAttribute('params'), '{}');
+    }
+
     public function testValidatorTest()
     {
         $item = new Item();

@@ -101,6 +101,10 @@ $item->params->set('{}');
 var_dump($item->params->isEmpty()); // true
 ```
 
+#### emptyValue
+
+You can set `emptyValue` option to define an empty JSON value (default `null`). Can be `'{}'`, `'[]''` or `null`.
+
 ### JsonValidator
 
 Configure your model (see behavior config upper):

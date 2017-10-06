@@ -32,6 +32,7 @@ class ItemMerge extends ActiveRecord
             [
                 'class'      => JsonBehavior::className(),
                 'attributes' => ['params'],
+                'emptyValue' => '{}',
             ]
         ];
     }

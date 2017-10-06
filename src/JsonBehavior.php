@@ -14,6 +14,11 @@ class JsonBehavior extends Behavior
      */
     public $attributes = [];
 
+    /**
+     * @var null|string
+     */
+    public $emptyValue;
+
 
     /**
      * @inheritdoc
@@ -63,7 +68,7 @@ class JsonBehavior extends Behavior
             if (!$field instanceof JsonField) {
                 $field = new JsonField($field);
             }
-            $this->owner->setAttribute($attribute, (string)$field ?: null);
+            $this->owner->setAttribute($attribute, (string)$field ?: $this->emptyValue);
         }
     }
 
