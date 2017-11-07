@@ -19,6 +19,11 @@ class JsonBehavior extends Behavior
      */
     public $emptyValue;
 
+    /**
+     * @var bool
+     */
+    public $encodeBeforeValidation = true;
+
 
     /**
      * @inheritdoc
@@ -28,12 +33,20 @@ class JsonBehavior extends Behavior
         return [
             ActiveRecord::EVENT_INIT            => function () { $this->initialization(); },
             ActiveRecord::EVENT_AFTER_FIND      => function () { $this->decode(); },
-            ActiveRecord::EVENT_BEFORE_VALIDATE => function () { $this->encodeValidate(); },
             ActiveRecord::EVENT_BEFORE_INSERT   => function () { $this->encode(); },
             ActiveRecord::EVENT_BEFORE_UPDATE   => function () { $this->encode(); },
-            ActiveRecord::EVENT_AFTER_VALIDATE  => function () { $this->decode(); },
             ActiveRecord::EVENT_AFTER_INSERT    => function () { $this->decode(); },
             ActiveRecord::EVENT_AFTER_UPDATE    => function () { $this->decode(); },
+            ActiveRecord::EVENT_BEFORE_VALIDATE => function () {
+                if ($this->encodeBeforeValidation) {
+                    $this->encodeValidate();
+                }
+            },
+            ActiveRecord::EVENT_AFTER_VALIDATE  => function () {
+                if ($this->encodeBeforeValidation) {
+                    $this->decode();
+                }
+            },
         ];
     }
 

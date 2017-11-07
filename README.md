@@ -167,3 +167,44 @@ $item = new Item();
 $item->params['one'] = 1;
 var_dump((string)$item->params); // {"one":1}
 ```
+
+## How To
+
+### Usage isAttributeChanged() and getDirtyAttributes()
+
+Yii2 does not provide the ability to inject code to check attribute dirty.
+
+If you need to use methods `isAttributeChanged()` or `getDirtyAttributes()`, you can override them in model:
+
+```php
+/**
+ * @inheritdoc
+ */
+public function isAttributeChanged($name, $identical = true)
+{
+    if ($this->$name instanceof JsonField) {
+        return (string)$this->$name !== $this->getOldAttribute($name);
+    } else {
+        return parent::isAttributeChanged($name, $identical);
+    }
+}
+
+/**
+ * @inheritdoc
+ */
+public function getDirtyAttributes($names = null)
+{
+    $result = [];
+    $data = parent::getDirtyAttributes($names);
+    foreach ($data as $name => $value) {
+        if ($value instanceof JsonField) {
+            if ((string)$value !== $this->getOldAttribute($name)) {
+                $result[$name] = $value;
+            }
+        } else {
+            $result[$name] = $value;
+        }
+    }
+    return $result;
+}
+```
