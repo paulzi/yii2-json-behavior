@@ -13,6 +13,13 @@ class JsonValidator extends Validator
     public $merge = false;
 
     /**
+     * Map json error constant to message
+     * @see: http://php.net/manual/ru/json.constants.php
+     * @var array
+     */
+    public $errorMessages = [];
+
+    /**
      * @inheritdoc
      */
     public function validateAttribute($model, $attribute)
@@ -28,9 +35,22 @@ class JsonValidator extends Validator
                 }
                 $model->$attribute = $new;
             } catch (InvalidParamException $e) {
-                $this->addError($model, $attribute, $e->getMessage());
+                $this->addError($model, $attribute, $this->getErrorMessage($e));
                 $model->$attribute = new JsonField();
             }
         }
+    }
+
+    /**
+     * @param \Exception $exception
+     * @return string
+     */
+    protected function getErrorMessage($exception)
+    {
+        $code = $exception->getCode();
+        if (isset($this->errorMessages[$code])) {
+            return $this->errorMessages[$code];
+        }
+        return $exception->getMessage();
     }
 }
