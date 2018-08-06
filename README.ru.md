@@ -2,6 +2,8 @@
 
 Автоматически призводит кодирование/декодирование атрибутов в формат json, предоставляет доступ как к массиву и валидацию json.
 
+**ВНИМАНИЕ! Начиная с версии 2.0.14 Yii имеет встроенную поддержку JSON-типов в БД, и данное поведение больше не будет работать с такими полями.**
+
 [English readme](https://github.com/paulzi/yii2-json-behavior/)
 
 [![Packagist Version](https://img.shields.io/packagist/v/paulzi/yii2-json-behavior.svg)](https://packagist.org/packages/paulzi/yii2-json-behavior)

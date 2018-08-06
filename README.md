@@ -2,6 +2,8 @@
 
 Auto decode/encode attribute value in json, provide array access and json validator.
 
+**WARNING! From version 2.0.14 Yii has built-in DB JSON-type, and this behavior is no longer required.** 
+
 [Russian readme](https://github.com/paulzi/yii2-json-behavior/blob/master/README.ru.md)
 
 [![Packagist Version](https://img.shields.io/packagist/v/paulzi/yii2-json-behavior.svg)](https://packagist.org/packages/paulzi/yii2-json-behavior)
