@@ -1,11 +1,12 @@
 <?php
 namespace paulzi\jsonBehavior;
 
+use ArrayIterator;
 use yii\base\Arrayable;
 use yii\base\InvalidParamException;
 use yii\helpers\Json;
 
-class JsonField implements \ArrayAccess, Arrayable
+class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
 {
     /**
      * @var array
@@ -121,5 +122,13 @@ class JsonField implements \ArrayAccess, Arrayable
     public function offsetUnset($offset)
     {
         unset($this->value[$offset]);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->value);
     }
 }
