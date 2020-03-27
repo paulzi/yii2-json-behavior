@@ -385,6 +385,15 @@ class BehaviorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($item->validate(), true);
     }
 
+    public function testIterator()
+    {
+        $model = new JsonField('{"test":"best"}');
+        foreach ($model as $key => $value) {
+            $this->assertSame($key, 'test');
+            $this->assertSame($value, 'best');
+        }
+    }
+
     /**
      * @inheritdoc
      */

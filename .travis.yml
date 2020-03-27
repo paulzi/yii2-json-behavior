@@ -1,10 +1,14 @@
 language: php
+dist: trusty
 
 php:
   - 5.4
   - 5.5
   - 5.6
-  - 7.0
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
 
 sudo: false
 
@@ -14,7 +18,7 @@ install:
 
 before_script:
   - |
-      if [ $TRAVIS_PHP_VERSION = '5.6' ]; then
+      if [ $TRAVIS_PHP_VERSION = '7.4' ]; then
         PHPUNIT_FLAGS="--coverage-clover=coverage.clover"
       fi
 
@@ -23,7 +27,7 @@ script:
 
 after_script:
   - |
-    if [ $TRAVIS_PHP_VERSION = '5.6' ]; then
+    if [ $TRAVIS_PHP_VERSION = '7.4' ]; then
       wget https://scrutinizer-ci.com/ocular.phar
       php ocular.phar code-coverage:upload --format=php-clover coverage.clover
     fi
