@@ -1,4 +1,5 @@
 <?php
+
 namespace paulzi\jsonBehavior;
 
 use ArrayIterator;
@@ -12,7 +13,6 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
      * @var array
      */
     protected $value;
-
 
     /**
      * @param string|array $value
@@ -56,6 +56,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     public function fields()
     {
         $fields = array_keys($this->value);
+
         return array_combine($fields, $fields);
     }
 
@@ -86,7 +87,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritdoc
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->value[$offset]);
     }
@@ -94,7 +95,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritdoc
      */
-    public function &offsetGet($offset)
+    public function &offsetGet($offset): bool
     {
         $null = null;
         if (isset($this->value[$offset])) {
@@ -107,7 +108,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritdoc
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
             $this->value[] = $value;
@@ -119,15 +120,15 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritdoc
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->value[$offset]);
     }
-    
+
     /**
      * @inheritDoc
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->value);
     }
