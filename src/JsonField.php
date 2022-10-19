@@ -86,6 +86,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->value[$offset]);
@@ -94,6 +95,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function &offsetGet($offset)
     {
         $null = null;
@@ -107,6 +109,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if ($offset === null) {
@@ -119,6 +122,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->value[$offset]);
@@ -127,6 +131,7 @@ class JsonField implements \ArrayAccess, Arrayable, \IteratorAggregate
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->value);
